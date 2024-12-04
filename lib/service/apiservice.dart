@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:youtube_video_downloader/models/youtubedatamodel.dart';
 import 'package:youtube_video_downloader/strings.dart';
@@ -11,10 +10,10 @@ class Apiservice {
 
   static Future<Youtubedatamodel?> getVideo() async {
     var url =
-        "$BASE_URL$SEARCH?part=snippet&maxResults=10&type=video&key=$api_key&language=en&regionCode=IN";
+        "$BASE_URL$SEARCH?part=snippet&maxResults=10&type=video&key=$api_key1&language=en&regionCode=IN";
     var response = await dio.get(url);
     if (response.statusCode == 200) {
-      return Youtubedatamodel.fromJson(jsonDecode(response.data));
+      return Youtubedatamodel.fromJson(response.data);
     }
     return null;
   }
@@ -24,7 +23,7 @@ class Apiservice {
         "$BASE_URL$SEARCH?part=snippet&maxResults=10&type=video&key=$api_key&language=en&regionCode=IN&q=$q";
     var response = await dio.get(url);
     if (response.statusCode == 200) {
-      return Youtubedatamodel.fromJson(jsonDecode(response.data));
+      return Youtubedatamodel.fromJson(response.data);
     }
     return null;
   }

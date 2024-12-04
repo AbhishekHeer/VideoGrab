@@ -31,15 +31,17 @@ class Downloadservice {
   static Future<VideoDetailsModel> getvideodetails(String videoID) async {
     var yt = YoutubeExplode();
     try {
+      var v = await yt.videos.get(videoID);
+      v.duration;
       var video = await yt.videos.get(videoID);
       return VideoDetailsModel(
+          videoID: videoID,
           author: video.author,
           title: video.title,
-          thumbnails: video.thumbnails.mediumResUrl,
           description: video.description,
           channelId: video.channelId.value,
-          duration: video.duration.toString(),
-          url: video.url);
+          duration: video.duration!,
+          isliked: true);
     } catch (e) {
       throw Exception("Error");
     }
