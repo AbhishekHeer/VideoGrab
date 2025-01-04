@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_video_downloader/models/videodetialmodel.dart';
 
 class Sharedprefs {
-  static const _key = "videodataa";
+  static const _key = "videodata";
 
   static Future<bool> savevideo(VideoDetailsModel videomodel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -34,5 +34,17 @@ class Sharedprefs {
     List<String> videodetails = preferences.getStringList(_key) ?? [];
     videodetails.removeAt(index);
     await preferences.setStringList(_key, videodetails);
+  }
+
+  static Future<bool> checkvideoexists(String videoid) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<String> videodetails = preferences.getStringList(_key) ?? [];
+    final videodata = jsonEncode(videodetails);
+    log(videodata.toString());
+    if (videodata.contains(videoid)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

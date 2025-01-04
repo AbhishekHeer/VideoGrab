@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:youtube_video_downloader/Ui/home/home.dart';
+import 'package:get/get.dart';
+import 'package:youtube_video_downloader/Ui/home/views/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         title: 'VideoGrab',
         debugShowCheckedModeBanner: false,
         darkTheme: ThemeData.dark(useMaterial3: true),

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:youtube_video_downloader/Ui/home/home_body_api.dart';
-import 'package:youtube_video_downloader/Ui/home/home_body_offline.dart';
+import 'package:youtube_video_downloader/Ui/home/views/home_body_api.dart';
+import 'package:youtube_video_downloader/Ui/home/views/home_body_offline.dart';
 import 'package:youtube_video_downloader/service/permission_handler.dart';
 
 class Home extends StatefulWidget {

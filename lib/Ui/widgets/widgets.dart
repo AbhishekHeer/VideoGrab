@@ -3,10 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:youtube_video_downloader/Ui/player/playvideo.dart';
+import 'package:youtube_video_downloader/models/youtubedatamodel.dart';
 import 'package:youtube_video_downloader/service/navigateservice.dart';
+import 'package:youtube_video_downloader/service/sharedprefs.dart';
 
 class Widgets {
-  static Padding row(double width, double height, data, BuildContext context) {
+  static Padding row(
+      double width, double height, Item data, BuildContext context) {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: width * .03, vertical: height * .02),
@@ -27,8 +30,7 @@ class Widgets {
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   image: DecorationImage(
-                      image:
-                          NetworkImage(data?.snippet.thumbnails.high.url ?? ''),
+                      image: NetworkImage(data.snippet.thumbnails.high.url),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -38,7 +40,7 @@ class Widgets {
                   padding: EdgeInsets.symmetric(
                       horizontal: width * .02, vertical: height * .01),
                   child: AutoSizeText(
-                    data!.snippet.title.length > 60
+                    data.snippet.title.length > 60
                         ? '${data.snippet.title.substring(0, 60)}...'
                         : data.snippet.title,
                     style: GoogleFonts.poppins(
@@ -56,21 +58,23 @@ class Widgets {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          width: width * .4,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: width * .04,
+                          ),
                           height: height * .05,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: width * .01),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(height * .01),
-                            color: Colors.tealAccent[100],
+                            color: Colors.redAccent,
                           ),
                           child: Center(
                             child: AutoSizeText(
-                              data.snippet.channelTitle,
+                              data.snippet.channelTitle.length > 15
+                                  ? '${data.snippet.channelTitle.substring(0, 15)}...'
+                                  : data.snippet.channelTitle,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   color: Colors.black,
-                                  fontSize: 12,
+                                  fontSize: width * .03,
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -82,14 +86,17 @@ class Widgets {
                       children: <Widget>[
                         InkWell(
                           onTap: () async {
-                            Navigateservice.navigateTo(
-                                context,
-                                Playvideo(
-                                    title: data.snippet.title,
-                                    videoID: data.id.videoId,
-                                    isliked: false,
-                                    channelname: data.snippet.channelTitle,
-                                    duration: Durations.medium1));
+                            await Sharedprefs.checkvideoexists(data.id.videoId)
+                                .then((val) {
+                              Navigateservice.navigateTo(
+                                  context,
+                                  Playvideo(
+                                      title: data.snippet.title,
+                                      videoID: data.id.videoId,
+                                      isliked: val,
+                                      channelname: data.snippet.channelTitle,
+                                      duration: Durations.medium2));
+                            });
                           },
                           child: Icon(
                             CupertinoIcons.play_circle_fill,

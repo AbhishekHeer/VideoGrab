@@ -79,16 +79,13 @@ class _PlayvideoState extends State<Playvideo> {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: width * .05, vertical: height * .03),
-                child: Likeshareloopicon.icons(
-                    context,
-                    widget.isliked,
-                    length,
-                    widget.videoID,
-                    widget.title,
-                    widget.channelname,
-                    widget.duration,
-                    MediaQuery.of(context).size.height,
-                    width),
+                child: Likeshareicon(
+                    isliked: widget.isliked,
+                    length: length,
+                    videoID: widget.videoID,
+                    title: widget.title,
+                    channelname: widget.channelname,
+                    duration: widget.duration),
               ),
               Channelview.channelview(height, width, widget.channelname),
               SizedBox(
@@ -106,8 +103,7 @@ class _PlayvideoState extends State<Playvideo> {
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Downloadstart.downloadstart(
-                      context, height, width, downloadstart, widget.videoID),
+                  : Downloadstart(videoID: widget.videoID),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: height * .02),
                 child: const Divider(),

@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:youtube_video_downloader/Ui/home/controller/filtercontroller.dart';
+import 'package:youtube_video_downloader/Ui/home/views/filters.dart';
 import 'package:youtube_video_downloader/Ui/widgets/widgets.dart';
 import 'package:youtube_video_downloader/service/apiservice.dart';
 
 class HomeBodyApi extends StatefulWidget {
+  static String q = "all";
   const HomeBodyApi({
     super.key,
   });
@@ -12,6 +16,8 @@ class HomeBodyApi extends StatefulWidget {
   @override
   State<HomeBodyApi> createState() => _HomeBodyApiState();
 }
+
+Filtercontroller filtercontroller = Get.put(Filtercontroller());
 
 class _HomeBodyApiState extends State<HomeBodyApi> {
   TextEditingController serchController = TextEditingController();
@@ -51,36 +57,32 @@ class _HomeBodyApiState extends State<HomeBodyApi> {
             ),
           ),
         ),
-        Expanded(
+        SizedBox(height: height * .04, width: width, child: const Filters()),
+        Obx(() => Expanded(
             child: FutureBuilder(
                 future: isseaching
                     ? Apiservice.seachvideo(serchController.text.toString())
-                    : Apiservice.getVideo(),
+                    : Apiservice.getVideo(
+                        query: filtercontroller.selected.value),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
+
                   if (snapshot.hasData) {
                     return ListView.builder(
                         itemCount: snapshot.data?.items.length,
                         itemBuilder: (context, index) {
                           final data = snapshot.data?.items[index];
-
-                          return Widgets.row(width, height, data, context);
+                          return Widgets.row(width, height, data!, context);
                         });
                   }
 
                   return Container();
-                }))
+                })))
       ],
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Apiservice.getVideo();
   }
 }

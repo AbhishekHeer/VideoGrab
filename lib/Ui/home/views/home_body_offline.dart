@@ -11,6 +11,8 @@ class HomeBodyOffline extends StatefulWidget {
   State<HomeBodyOffline> createState() => _HomeBodyOfflineState();
 }
 
+int progess = 0;
+
 class _HomeBodyOfflineState extends State<HomeBodyOffline> {
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,7 @@ class _HomeBodyOfflineState extends State<HomeBodyOffline> {
               ),
             ),
           ),
+        
         ],
       ),
     );

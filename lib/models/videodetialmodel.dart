@@ -7,7 +7,6 @@ class VideoDetailsModel {
   final String channelId;
   final Duration duration;
   final String videoID;
-
   final bool isliked;
   VideoDetailsModel({
     required this.title,

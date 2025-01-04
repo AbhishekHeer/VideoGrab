@@ -37,8 +37,8 @@ class _ListviewpageState extends State<Listviewpage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Playvideo(
-                                        duration: items.duration,
                                         isliked: items.isliked,
+                                        duration: items.duration,
                                         title: items.title,
                                         videoID: items.videoID,
                                         channelname: items.author)));
